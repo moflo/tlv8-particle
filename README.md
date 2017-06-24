@@ -35,7 +35,7 @@ See the [examples](examples) folder for more details.
 
 ## Documentation
 
-More information online at GitHub [https://github.com/moflo/TLV8](https://github.com/moflo/TLV8)
+More information online at GitHub [https://github.com/moflo/tlv8-particle](https://github.com/moflo/tlv8-particle)
 
 
 ## LICENSE
