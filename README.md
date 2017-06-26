@@ -20,7 +20,7 @@ void setup() {
   Particle.publish("TLV8 Setup");
 
   // Initialize TLV8
-  tlv.encode( "\x01\x01\x01 );
+  tlv.encode( "\x01\x01\x01" );
   
 
 }
