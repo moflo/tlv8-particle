@@ -22,7 +22,7 @@ tlv_result_t TLV8Class::encode(tlv_map_t * map, uint8_t ** stream_ptr, uint16_t 
     struct tlv TLV8;
     uint8_t offset = 0;
     uint8_t previous_type = 0xff;   // Should be an unused type code, assume 0xFF
-    uint16_t previous_size = 0;
+    uint16_t remaining_bytes = 0;
 
     for (int i = 0; i < map->count; i++) {
 
@@ -31,32 +31,48 @@ tlv_result_t TLV8Class::encode(tlv_map_t * map, uint8_t ** stream_ptr, uint16_t 
         uint8_t type = TLV8.type;
         uint8_t * data = TLV8.data;
         
-        if ( size >= MAX_ITEM_SIZE )
-        {
-            // Split encoded object into two or more consecutive segments
-            previous_type = type;
-            previous_size = size;
-            
-            // while remaining object bytes < MAX_ITEM_SIZE, encode duplicate items
-            
-        }
+        // Split encoded object into two or more consecutive segments
+        previous_type = type;
+        remaining_bytes = size;
         
-        // Initialize or reallocate the stream buffer as needed
-        if ( i == 0 )
-        {
-            stream = (uint8_t *)malloc(size + 2);
+        while (remaining_bytes > 0) {
+
+            // Initialize or reallocate the stream buffer as needed
+            uint16_t data_size = ( remaining_bytes >= MAX_ITEM_SIZE ) ? MAX_ITEM_SIZE : remaining_bytes;
             
+            if ( i == 0 )
+            {
+                uint8_t *mem = (uint8_t *)malloc(data_size + 2);
+                if (NULL == mem)
+                {
+                    return TLV_ERROR_NULL;
+                }
+                else
+                {
+                    stream = mem;
+                }
+            }
+            else
+            {
+                uint8_t *mem = (uint8_t *)realloc(stream, data_size + 2);
+                if (NULL == mem)
+                {
+                    return TLV_ERROR_NULL;
+                }
+                else
+                {
+                    stream = mem;
+                }
+            }
+            
+            stream[offset] = type;
+            stream[offset+1] = data_size;
+            memcpy(stream + offset + 2, data, data_size);
+            
+            offset += data_size + 2;
+            
+            remaining_bytes = remaining_bytes - data_size;
         }
-        else
-        {
-            uint8_t *mem = (uint8_t *)realloc(stream, size + 2);
-        }
-
-        stream[offset] = type;
-        stream[offset+1] = size;
-        memcpy(stream + offset + 2, data, size);
-
-        offset += size + 2;
     }
     
     *length = offset;
