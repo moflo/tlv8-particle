@@ -261,7 +261,7 @@ int main()
             
             assertNotEqual(len, length, "size not equal to length", &error_count);
 
-            for (int i = 0; i <= length; i++) {
+            for (int i = 0; i < length; i++) {
                 char summary[32];
                 sprintf(summary, "buffer char not equal at pos %d",i);
                 assertNotEqual(buffer[i], PairTagBuffer[i], summary, &error_count);
@@ -294,7 +294,7 @@ int main()
             
             assertNotEqual(len, length, "size not equal to length", &error_count);
             
-            for (int i = 0; i <= length; i++) {
+            for (int i = 0; i < length; i++) {
                 char summary[32];
                 sprintf(summary, "buffer char not equal at pos %d",i);
                 assertNotEqual(buffer[i], PairTagBuffer[i], summary, &error_count);
@@ -326,17 +326,44 @@ int main()
             
             TLV8.encode(&PairTagTLV8, &PairTagBuffer, &length);
             
-            assertNotEqual(len, length, "size not equal to length", &error_count);
+            assertNotEqual(len, length, "encode decode length not equal", &error_count);
             
-            for (int i = 0; i <= length; i++) {
-                char summary[32];
-                sprintf(summary, "buffer char not equal at pos %d",i);
-                assertNotEqual(buffer[i], PairTagBuffer[i], summary, &error_count);
-                
-            }
+            assertNotEqual(PairTagTLV8.count, 0x03, "Encoded size not 0x03", &error_count);
             
             assertNotEqual(PairTagBuffer[0], 0xff, "encode byte is not 0xff", &error_count);
             
+            
+        }
+        {
+            cout << "Insert - insertion test ..." << endl;
+            
+            TLV8Class TLV8 = TLV8Class();
+            
+            struct tlv_map PairTagTLV8;
+            memset(&PairTagTLV8, 0, sizeof(tlv_map));
+            
+            unsigned char buffer[9] = "deadbeef";
+            
+            struct tlv tlv1 = TLV8.TLVFromBuffer(buffer, 0x01, 8);
+            
+            TLV8.insert(&PairTagTLV8, tlv1);
+
+            assertNotEqual(PairTagTLV8.count, 1, "size not equal to 1", &error_count);
+            assertNotEqual(PairTagTLV8.object[0].type, 0x01, "object @ 0 type not equal to 0x01", &error_count);
+            assertNotEqual(PairTagTLV8.object[0].size, 8, "object @ 0 size not equal to 1", &error_count);
+            for (int i = 0; i < 8; i++) {
+                char summary[64];
+                sprintf(summary, "object @ 0 data char not equal at pos %d",i);
+                assertNotEqual(PairTagTLV8.object[0].data[i], buffer[i], summary, &error_count);
+                
+            }
+
+            uint8_t *PairTagBuffer = NULL;
+            uint16_t length = 0;
+            
+            TLV8.encode(&PairTagTLV8, &PairTagBuffer, &length);
+            
+            assertNotEqual(length, 10, "size not equal to 3", &error_count);
             
         }
 

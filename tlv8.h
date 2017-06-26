@@ -37,7 +37,8 @@ typedef struct tlv_map
 typedef enum tlv_result {
 
     TLV_SUCESS = 0,
-    TLV_ERROR_NULL
+    TLV_ERROR_NULL,
+    TLV_ERROR_MAX_LIMIT
 
 } tlv_result_t;
 
@@ -52,9 +53,8 @@ public:
    
    tlv_result_t encode(tlv_map_t * map, uint8_t ** stream_ptr, uint16_t * length);
    tlv_result_t decode(uint8_t * stream, uint16_t length, tlv_map_t * map);
-   tlv_t        TLVFromInt(uint8_t * stream, int16_t size);
-   tlv_t        TLVFromString(uint8_t * stream, int16_t type, int16_t size);
-   tlv_t        TLVAppendStrings(uint8_t * stream1, uint8_t * stream2, int16_t type, int16_t size1, int16_t size2);
+   tlv_t        TLVFromBuffer(uint8_t * stream, int16_t type, int16_t size);
+   tlv_t        TLVAppendBuffers(uint8_t * stream1, uint8_t * stream2, int16_t type, int16_t size1, int16_t size2);
    tlv_result_t insert(tlv_map_t * map, tlv_t tlv);
    uint8_t      getCount(tlv_map_t map);
    tlv_t        getTLVAtIndex(tlv_map_t map, uint8_t index);

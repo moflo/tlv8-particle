@@ -100,12 +100,12 @@ tlv_result_t TLV8Class::decode(uint8_t * stream, uint16_t length, tlv_map_t * ma
             uint8_t index = map->count - 1;
             uint8_t * old_data = map->object[ index ].data;
             
-            new_tlv = TLVAppendStrings(old_data, data, type, previous_size, size);
+            new_tlv = TLVAppendBuffers(old_data, data, type, previous_size, size);
             map->object[ index ] = new_tlv;
 
         }
         else {
-            new_tlv = TLVFromString(data, type, size);
+            new_tlv = TLVFromBuffer(data, type, size);
             
             uint8_t index = map->count;
             map->object[ index ] = new_tlv;
@@ -117,23 +117,15 @@ tlv_result_t TLV8Class::decode(uint8_t * stream, uint16_t length, tlv_map_t * ma
         previous_size = size;
         
         i += size + 2;
+        
     }
     
    return TLV_SUCESS;
 
 }
 
-tlv_t TLV8Class::TLVFromInt(uint8_t * stream, int16_t size)
-{
 
-    struct tlv TLV8;
-    memset(&TLV8, 0, sizeof(tlv));
-
-    return TLV8;
-
-}
-
-tlv_t TLV8Class::TLVFromString(uint8_t * stream, int16_t type, int16_t size)
+tlv_t TLV8Class::TLVFromBuffer(uint8_t * stream, int16_t type, int16_t size)
 {
 
     struct tlv TLV8;
@@ -150,7 +142,7 @@ tlv_t TLV8Class::TLVFromString(uint8_t * stream, int16_t type, int16_t size)
 
 }
 
-tlv_t TLV8Class::TLVAppendStrings(uint8_t * stream1, uint8_t * stream2, int16_t type, int16_t size1, int16_t size2)
+tlv_t TLV8Class::TLVAppendBuffers(uint8_t * stream1, uint8_t * stream2, int16_t type, int16_t size1, int16_t size2)
 {
     struct tlv TLV8;
     memset(&TLV8, 0, sizeof(tlv));
@@ -167,13 +159,23 @@ tlv_t TLV8Class::TLVAppendStrings(uint8_t * stream1, uint8_t * stream2, int16_t 
 
 tlv_result_t TLV8Class::insert(tlv_map_t * map, tlv_t tlv)
 {
+    uint8_t index = map->count;
+    
+    if (index == TLV8_MAP_SIZE)
+    {
+        return TLV_ERROR_MAX_LIMIT;
+    }
+    
+    map->object[ index ] = tlv;
+    map->count = index  + 1;
+    
    return TLV_SUCESS;
 
 }
 
 uint8_t TLV8Class::getCount(tlv_map_t map)
 {
-   return 0;
+    return map.count;
 
 }
 
@@ -183,6 +185,11 @@ tlv_t TLV8Class::getTLVAtIndex(tlv_map_t map, uint8_t index)
     struct tlv TLV8;
     memset(&TLV8, 0, sizeof(tlv));
 
+    if (index <= TLV8_MAP_SIZE)
+    {
+        TLV8 = map.object[ index ];
+    }
+    
     return TLV8;
 
 }
