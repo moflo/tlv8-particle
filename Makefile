@@ -19,13 +19,14 @@ CCCFLAGS = -Wall -ggdb -std=c++0x -I. -O3 -fpermissive
 
 #build the app
 
-test: test.o tlv8.o
-	$(CCC) test.o tlv8.o -o test
+test: test.o src/tlv8.o
+	$(CCC) test.o src/tlv8.o -o test
 
 particle:
 	rm -f *.o
-	particle compile photon tlv8.*
+	particle compile photon src/tlv8.*
 
 clean::
 	rm -f *.o
+	rm -f src/*.o
 	rm -f photon_firmware*
