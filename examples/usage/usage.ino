@@ -3,7 +3,7 @@
 #include "TLV8.h"
 
 // Initialize objects from the lib
-TLV8 tlv8;
+TLV8Class tlv8;
 
 void setup() {
     Particle.publish("TLV8 Setup");
