@@ -24,7 +24,7 @@ test: test.o src/TLV8.o
 
 particle:
 	rm -f *.o
-	particle compile photon src/TLV8.*
+	particle compile photon examples/usage/usage.ino src/TLV8.*
 
 clean::
 	rm -f *.o
