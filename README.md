@@ -12,16 +12,24 @@ This Particle.io library for encodng and decoding of TLV 8-bit structures per th
 Connect Photon hardware, add the TLV8 library to your project and follow this simple example:
 
 ```
-// Create a TLV8 
-TLV8 tlv;
+#include <tlv8.h>
 
+TLV8Class tlv8;
 
 void setup() {
-  Particle.publish("TLV8 Setup");
+    Particle.publish("TLV8 Setup");
 
-  // Initialize TLV8
-  tlv.encode( "\x01\x01\x01" );
-  
+    // Initialize TLV8
+    struct tlv_map PairTagTLV8;
+    memset(&PairTagTLV8, 0, sizeof(tlv_map));  
+
+    const uint8_t len = 10;
+
+    unsigned char buffer[len+1] = "\xff\x08testtest";
+
+    tlv8.decode( buffer, len, &PairTagTLV8 );
+
+    Particle.publish("TLV8 Object Count: ", PairTagTLV8.count );
 
 }
 
