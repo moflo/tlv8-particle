@@ -1,5 +1,6 @@
-// Basic MDNS Bonjour Service for Particle.io boards
-
+// A Particle library for TLV encoding, for use with Apple's HomeKit.
+// Copyright (c) 2017, mobile flow llc.
+// https://github.com/moflo/tlv8-particle
 
 #ifndef _INCL_TLV8
 #define _INCL_TLV8

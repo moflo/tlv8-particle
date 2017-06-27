@@ -1,6 +1,6 @@
-// Basic MDNS Bonjour Service for Particle.io boards
-//     Check Particle compilation:
-//        particle compile photon bonjour.cpp
+// A Particle library for TLV encoding, for use with Apple's HomeKit.
+// Copyright (c) 2017, mobile flow llc.
+// https://github.com/moflo/tlv8-particle
 
 #include "tlv8.h"
 

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		912E98F51F01875E004D16F5 /* tlv8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 912E98F31F01875E004D16F5 /* tlv8.cpp */; };
+		917DA06B1F01DC33008793D8 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 917DA0691F01DC33008793D8 /* Makefile */; };
+		917DA06C1F01DC33008793D8 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 917DA06A1F01DC33008793D8 /* README.md */; };
 		91AA5FE61EFD8E9300AF9E9C /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91AA5FE31EFD8E9300AF9E9C /* test.cpp */; };
 		91F3AD0F1EFD9D9200993D1C /* TLV8Test.mm in Sources */ = {isa = PBXBuildFile; fileRef = 91F3AD0E1EFD9D9200993D1C /* TLV8Test.mm */; };
 /* End PBXBuildFile section */
@@ -28,6 +30,9 @@
 		912E98F31F01875E004D16F5 /* tlv8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tlv8.cpp; sourceTree = "<group>"; };
 		912E98F41F01875E004D16F5 /* tlv8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tlv8.h; sourceTree = "<group>"; };
 		914E81371EFD8E560061CB9A /* TLV8 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TLV8; sourceTree = BUILT_PRODUCTS_DIR; };
+		917DA0681F01DC33008793D8 /* library.properties */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = library.properties; sourceTree = "<group>"; };
+		917DA0691F01DC33008793D8 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		917DA06A1F01DC33008793D8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		91AA5FE31EFD8E9300AF9E9C /* test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test.cpp; sourceTree = SOURCE_ROOT; };
 		91F3AD0C1EFD9D9200993D1C /* TLV8Test.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TLV8Test.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		91F3AD0E1EFD9D9200993D1C /* TLV8Test.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TLV8Test.mm; sourceTree = "<group>"; };
@@ -64,6 +69,9 @@
 		914E812E1EFD8E560061CB9A = {
 			isa = PBXGroup;
 			children = (
+				917DA06A1F01DC33008793D8 /* README.md */,
+				917DA0681F01DC33008793D8 /* library.properties */,
+				917DA0691F01DC33008793D8 /* Makefile */,
 				914E81391EFD8E560061CB9A /* TLV8 */,
 				91F3AD0D1EFD9D9200993D1C /* TLV8Test */,
 				914E81381EFD8E560061CB9A /* Products */,
@@ -188,7 +196,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				917DA06B1F01DC33008793D8 /* Makefile in Sources */,
 				91AA5FE61EFD8E9300AF9E9C /* test.cpp in Sources */,
+				917DA06C1F01DC33008793D8 /* README.md in Sources */,
 				912E98F51F01875E004D16F5 /* tlv8.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
