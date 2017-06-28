@@ -418,6 +418,43 @@ int main()
             assertNotEqual(response.object[2].data[0], 'D', "data not equal", &error_count);
             
         }
+        {
+            cout << "TLV8 - tlv_map initialization test ..." << endl;
+            
+            tlv_map tlvMap = tlv_map();
+            
+            tlv_t tlvTest = tlv(0x11, 0x2);
+            tlvMap.insert( tlvTest );
+            
+            assertNotEqual(tlvMap.count, 0x01, "count not equal", &error_count);
+            
+            assertNotEqual(tlvMap.object[0].type, 0x11, "type not equal", &error_count);
+            assertNotEqual(tlvMap.object[0].size, 0x01, "size not equal", &error_count);
+            assertNotEqual(tlvMap.object[0].data[0], 0x2, "data not equal", &error_count);
+            
+        }
+        {
+            cout << "TLV8 - tlv_map initialization option test ..." << endl;
+            
+            
+            tlv_t tlv1 = tlv(0x11, 0x2);
+            tlv_t tlv2 = tlv(0x22, 0x4);
+
+            tlv_map tlvMap = tlv_map(tlv1, tlv2);
+
+            assertNotEqual(tlvMap.count, 0x02, "count not equal", &error_count);
+            
+            assertNotEqual(tlvMap.object[0].type, 0x11, "type not equal", &error_count);
+            assertNotEqual(tlvMap.object[0].size, 0x01, "size not equal", &error_count);
+            assertNotEqual(tlvMap.object[0].data[0], 0x2, "data not equal", &error_count);
+
+            assertNotEqual(tlvMap.object[1].type, 0x22, "type not equal", &error_count);
+            assertNotEqual(tlvMap.object[1].size, 0x01, "size not equal", &error_count);
+            assertNotEqual(tlvMap.object[1].data[0], 0x4, "data not equal", &error_count);
+
+        }
+
+        
         cout << "\n\nError count == " << error_count << endl;
         
         return 1;
