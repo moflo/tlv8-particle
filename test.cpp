@@ -366,7 +366,58 @@ int main()
             assertNotEqual(length, 10, "size not equal to 3", &error_count);
             
         }
-
+        {
+            cout << "TLV8 - tlv data test ..." << endl;
+            
+            tlv_t tlvTest = tlv(0x11, 0x2);
+            
+            assertNotEqual(tlvTest.type, 0x11, "type not equal", &error_count);
+            assertNotEqual(tlvTest.size, 0x01, "size not equal", &error_count);
+            assertNotEqual(tlvTest.data[0], 0x2, "data not equal", &error_count);
+            
+        }
+        {
+            cout << "TLV8 - tlv alloc test ..." << endl;
+            
+            const char string[9] = "DEADBEEF";
+            
+            tlv_t tlvTest = tlv(0x0A, (uint8_t *)string, 8);
+            
+            assertNotEqual(tlvTest.type, 0x0A, "type not equal", &error_count);
+            assertNotEqual(tlvTest.size, 0x08, "size not equal", &error_count);
+            assertNotEqual(tlvTest.data[0], 'D', "data not equal", &error_count);
+            assertNotEqual(tlvTest.data[1], 'E', "data not equal", &error_count);
+            assertNotEqual(tlvTest.data[2], 'A', "data not equal", &error_count);
+            assertNotEqual(tlvTest.data[3], 'D', "data not equal", &error_count);
+            
+        }
+        {
+            cout << "TLV8 - tlv_map creation test" << endl;
+            
+            tlv_map_t response;
+            uint8_t key[17] = "DEADBEEFDEADBEEF";
+            uint8_t salt[17] = "DEADBEEFDEADBEEF";
+            
+            response.count = 2;
+            response.object[0] = tlv(0x11, 0x2);
+            response.object[1] = tlv(0xDA, key, 16);
+            response.object[2] = tlv(0x0A, salt, 16);
+            
+            assertNotEqual(response.count, 0x03, "count not equal", &error_count);
+            
+            assertNotEqual(response.object[0].type, 0x11, "type not equal", &error_count);
+            assertNotEqual(response.object[0].size, 0x01, "size not equal", &error_count);
+            assertNotEqual(response.object[0].data[0], 0x2, "data not equal", &error_count);
+            
+            assertNotEqual(response.object[1].type, 0xDA, "type not equal", &error_count);
+            assertNotEqual(response.object[1].size, 0x10, "size not equal", &error_count);
+            assertNotEqual(response.object[1].data[0], 'D', "data not equal", &error_count);
+            
+            assertNotEqual(response.object[2].type, 0x0A, "type not equal", &error_count);
+            assertNotEqual(response.object[2].size, 0x10, "size not equal", &error_count);
+            assertNotEqual(response.object[2].data[0], 'D', "data not equal", &error_count);
+            
+        }
         cout << "\n\nError count == " << error_count << endl;
         
         return 1;

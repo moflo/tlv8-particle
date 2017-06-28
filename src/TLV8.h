@@ -26,6 +26,19 @@ typedef struct tlv
     uint8_t * data; // pointer to data
     int16_t size;   // size of data
 
+    
+    tlv() {type = 0; size = 0;};
+    tlv(int8_t t, int8_t c) {
+        type = t;
+        size = 1;
+        data = (uint8_t *)malloc(1); data = (uint8_t *)memcpy(data,&c,1);
+    };
+    tlv(int8_t t, uint8_t *d, int16_t s) {
+        type = t;
+        size = s;
+        data = (uint8_t *)malloc(s); data = (uint8_t *)memcpy(data,d,s);
+    };
+
 } tlv_t;
 
 typedef struct tlv_map
