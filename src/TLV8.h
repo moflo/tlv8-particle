@@ -25,7 +25,6 @@ typedef struct tlv
     int8_t type;    // type
     uint8_t * data; // pointer to data
     int16_t size;   // size of data
-
     
     tlv() {type = 0; size = 0;};
     tlv(int8_t t, int8_t c) {
@@ -38,7 +37,8 @@ typedef struct tlv
         size = s;
         data = (uint8_t *)malloc(s); data = (uint8_t *)memcpy(data,d,s);
     };
-
+    
+    
 } tlv_t;
 
 typedef struct tlv_map
@@ -51,35 +51,36 @@ typedef struct tlv_map
     tlv_map(tlv_t tlv1, tlv_t tlv2) { count = 0; insert(tlv1); insert(tlv2); }
     tlv_map(tlv_t tlv1, tlv_t tlv2, tlv_t tlv3) { insert(tlv1); insert(tlv2); insert(tlv3); }
     void insert(tlv_t tlv) { if (count < TLV8_MAP_SIZE) { object[count++] = tlv; } }
-
+    
 } tlv_map_t;
 
 typedef enum tlv_result {
-
+    
     TLV_SUCESS = 0,
     TLV_ERROR_NULL,
     TLV_ERROR_MAX_LIMIT
-
+    
 } tlv_result_t;
 
 class TLV8Class
 {
 private:
-   uint8_t*     _buffer;
-
+    uint8_t*     _buffer;
+    
 public:
-   TLV8Class();
-   ~TLV8Class();
-   
-   tlv_result_t encode(tlv_map_t * map, uint8_t ** stream_ptr, uint16_t * length);
-   tlv_result_t decode(uint8_t * stream, uint16_t length, tlv_map_t * map);
-   tlv_t        TLVFromBuffer(uint8_t * stream, int16_t type, int16_t size);
-   tlv_t        TLVAppendBuffers(uint8_t * stream1, uint8_t * stream2, int16_t type, int16_t size1, int16_t size2);
-   tlv_result_t insert(tlv_map_t * map, tlv_t tlv);
-   uint8_t      getCount(tlv_map_t map);
-   tlv_t        getTLVAtIndex(tlv_map_t map, uint8_t index);
+    TLV8Class();
+    ~TLV8Class();
+    
+    tlv_result_t encode(tlv_map_t * map, uint8_t ** stream_ptr, uint32_t * length);
+    tlv_result_t decode(uint8_t * stream, uint16_t length, tlv_map_t * map);
+    tlv_t        TLVFromBuffer(uint8_t * stream, int16_t type, int16_t size);
+    tlv_t        TLVAppendBuffers(uint8_t * stream1, uint8_t * stream2, int16_t type, int16_t size1, int16_t size2);
+    tlv_result_t insert(tlv_map_t * map, tlv_t tlv);
+    uint8_t      getCount(tlv_map_t map);
+    tlv_t        getTLVAtIndex(tlv_map_t map, uint8_t index);
     tlv_result_t TLVFree(tlv_map_t * map);
-
+    
 };
+
 
 #endif
